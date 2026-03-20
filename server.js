@@ -410,12 +410,14 @@ async function sendSMSAlert(spot, cond) {
     return;
   }
   const body =
-    `🏄 BRAT-O-METER ALERT!\n` +
+    `BRAT-O-METER ALERT!\n` +
     `${spot.fullName} is firing!\n` +
     `Waves: ${cond.waveHeightFt}ft  Period: ${cond.wavePeriod ?? '?'}s\n` +
     `Wind: ${cond.windSpeedMph}mph ${cond.windDir}\n` +
     `Rating: ${cond.quality}\n` +
-    `Drop everything! 🌊`;
+    `Drop everything! 🏄🌊`;
+
+  const logoUrl = `https://ingenious-celebration-production-2aaa.up.railway.app/brat-boys-logo.png`;
 
   // Support multiple comma-separated recipients
   const recipients = process.env.ALERT_PHONE_NUMBER.split(',').map(n => n.trim()).filter(Boolean);
@@ -424,10 +426,11 @@ async function sendSMSAlert(spot, cond) {
     try {
       await twilioClient.messages.create({
         body,
+        mediaUrl: [logoUrl],
         from: process.env.TWILIO_PHONE_NUMBER,
         to,
       });
-      console.log(`📱 SMS sent to ${to} for ${spot.fullName}`);
+      console.log(`📱 MMS sent to ${to} for ${spot.fullName}`);
     } catch (e) {
       console.error(`SMS error for ${to}:`, e.message);
     }
