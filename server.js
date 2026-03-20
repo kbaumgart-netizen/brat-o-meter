@@ -496,7 +496,9 @@ app.get('/api/alerts/status', (req, res) => {
 
 // ─── START ────────────────────────────────────────────────────────────────────
 
-app.listen(PORT, () => {
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`
   🏄  Brat-o-meter is live!
   ─────────────────────────────────────
