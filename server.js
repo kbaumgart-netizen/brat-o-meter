@@ -460,6 +460,12 @@ async function checkAlertsAndNotify() {
 // Run alert check every 30 minutes
 cron.schedule('*/30 * * * *', checkAlertsAndNotify);
 
+// Reset all alert states at midnight CT so alerts can fire again each day
+cron.schedule('0 0 * * *', () => {
+  SPOTS.forEach(s => { alertSent[s.id] = false; });
+  console.log('🔄 Daily alert reset — all spots ready to alert again');
+}, { timezone: 'America/Chicago' });
+
 // ─── API ROUTES ───────────────────────────────────────────────────────────────
 
 app.get('/api/conditions', async (req, res) => {
