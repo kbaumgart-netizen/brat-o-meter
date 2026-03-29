@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 3000;
+const TWILIO_FROM = process.env.TWILIO_PHONE_NUMBER || '+14144045955';
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
 
@@ -405,7 +406,7 @@ async function fetchForecast(spotId) {
 // ─── SMS ALERTS ───────────────────────────────────────────────────────────────
 
 async function sendSMSAlert(spot, cond) {
-  if (!twilioClient || !process.env.TWILIO_PHONE_NUMBER || !process.env.ALERT_PHONE_NUMBER) {
+  if (!twilioClient || !process.env.ALERT_PHONE_NUMBER) {
     console.log(`📱 [SMS disabled] Alert conditions met at ${spot.fullName}`);
     return;
   }
@@ -427,7 +428,7 @@ async function sendSMSAlert(spot, cond) {
       await twilioClient.messages.create({
         body,
         mediaUrl: [logoUrl],
-        from: process.env.TWILIO_PHONE_NUMBER,
+        from: TWILIO_FROM,
         to,
       });
       console.log(`📱 MMS sent to ${to} for ${spot.fullName}`);
