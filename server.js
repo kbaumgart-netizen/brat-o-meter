@@ -504,6 +504,40 @@ app.get('/api/alerts/status', (req, res) => {
   res.json({ smsEnabled, alertSent, twilioConfigured: !!twilioClient });
 });
 
+// ─── PRIVACY & TERMS ─────────────────────────────────────────────────────────
+
+app.get('/privacy', (req, res) => {
+  res.send(`<!DOCTYPE html><html><head><title>Brat-o-meter Privacy Policy</title>
+  <style>body{font-family:sans-serif;max-width:700px;margin:40px auto;padding:0 20px;line-height:1.6}</style></head>
+  <body><h1>Brat-o-meter Privacy Policy</h1>
+  <p><strong>Last updated: April 2026</strong></p>
+  <p>Brat-o-meter is a private surf alert service for a small group of friends monitoring Lake Michigan surf conditions.</p>
+  <h2>Information We Collect</h2>
+  <p>We collect only the phone numbers of users who have explicitly opted in to receive surf condition alerts by texting START to our number.</p>
+  <h2>How We Use Your Information</h2>
+  <p>Phone numbers are used solely to send surf condition alert text messages when wave and wind thresholds are met at monitored Lake Michigan surf spots.</p>
+  <h2>SMS Alerts</h2>
+  <p>Message frequency varies based on surf conditions. Standard message and data rates may apply. Reply STOP to unsubscribe at any time. Reply HELP for help.</p>
+  <h2>Data Sharing</h2>
+  <p>We do not sell, share, or distribute any personal information to third parties.</p>
+  <h2>Contact</h2>
+  <p>For questions, reply HELP to any alert message.</p></body></html>`);
+});
+
+app.get('/terms', (req, res) => {
+  res.send(`<!DOCTYPE html><html><head><title>Brat-o-meter Terms</title>
+  <style>body{font-family:sans-serif;max-width:700px;margin:40px auto;padding:0 20px;line-height:1.6}</style></head>
+  <body><h1>Brat-o-meter Terms of Service</h1>
+  <p><strong>Last updated: April 2026</strong></p>
+  <p>By opting in to Brat-o-meter SMS alerts, you agree to receive automated surf condition notifications for Lake Michigan spots.</p>
+  <h2>Service Description</h2>
+  <p>Brat-o-meter monitors wave height, wind speed, and wind direction at Milwaukee/Bradford Beach, Racine, and Port Washington. Alerts are sent when all three surfing thresholds are met simultaneously.</p>
+  <h2>Opt-Out</h2>
+  <p>Reply STOP at any time to unsubscribe. You will receive no further messages.</p>
+  <h2>Disclaimer</h2>
+  <p>Surf conditions are provided for informational purposes only. Always use your own judgment when entering the water.</p></body></html>`);
+});
+
 // ─── START ────────────────────────────────────────────────────────────────────
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
